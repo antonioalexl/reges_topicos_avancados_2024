@@ -1,1 +1,41 @@
-<p>cliente-lst works!</p>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-2">
+            <a class="btn btn-success" routerLink="/cliente"> Novo</a>
+        </div>
+    </div>
+<table class="table table-responsive table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Nome Completo</th>
+            <th>Nome Resumido</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Nascimento</th>
+            <th>Documento</th>
+            <th>IE/RG</th>
+            <th>#</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let cliente of this.clientes">
+            <td>{{cliente.nomeCompleto}}</td>
+            <td>{{cliente.nomeResumido}}</td>
+            <td>{{cliente.email}}</td>
+            <td>{{cliente.telefone}}</td>
+            <td>{{cliente.dataNascFund}}</td>
+            <td>{{cliente.documento}}</td>
+            <td>{{cliente.rgIe}}</td>
+            <td>
+                <button type="button" class="btn btn-warning">Editar</button>
+                <button type="button" (click)="remover(1)" class="btn btn-danger">Remover</button>
+            </td>
+        </tr>
+
+    </tbody>
+
+
+</table>
+
+</div>

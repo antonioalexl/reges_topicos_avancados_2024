@@ -1,1 +1,64 @@
-<p>cliente-frm works!</p>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">Nome Completo </label>
+                <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="this.cliente.nomeCompleto">
+              </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">Nome Resumido </label>
+                <input type="text" id="nomeResumido" name="nomeResumido" class="form-control" [(ngModel)]="this.cliente.nomeResumido">
+              </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">E-mail </label>
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="this.cliente.email">
+              </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">Telefone </label>
+                <input type="text" id="telefone" name="telefone" class="form-control" [(ngModel)]="this.cliente.telefone">
+              </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">Data Nascimento </label>
+                <input type="date" id="dataNascimento" name="dataNascimento" class="form-control" [(ngModel)]="this.cliente.dataNascFund">
+              </div>
+        </div>
+
+        <div class=" col-sm-12 col-md-12  col-lg-4">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">Documento </label>
+                <input type="text" id="documento" name="documento" class="form-control" [(ngModel)]="this.cliente.documento">
+              </div>
+        </div>
+
+        <div class=" col-sm-12 col-md-12 col-lg-4">
+            <div class="form-group">
+                <label for="disabledTextInput" class="form-label">RG </label>
+                <input type="text" id="rg" name="rg" class="form-control" [(ngModel)]="this.cliente.rgIe">
+              </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <button type="button" (click)="submit()" class="btn btn-primary">Salvar</button>
+            <button type="button" (click)="voltar()" class="btn btn-success">Voltar</button>
+        </div>
+
+    </div>
+
+</div>

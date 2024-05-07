@@ -6,7 +6,9 @@ export abstract class Pessoa{
     email?: string;
     //private Endereco endereco;
     telefone?: string;
+
     dataNascFund?: Date;//data de nascimento e fundação
     documento?: string; //cnpj ou cpf
+    
     rgIe?: string;//inscricao estadual ou rg
 }
