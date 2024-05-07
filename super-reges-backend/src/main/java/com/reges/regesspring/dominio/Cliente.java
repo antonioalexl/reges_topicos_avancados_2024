@@ -1,5 +1,6 @@
 package com.reges.regesspring.dominio;
 
+import java.util.Calendar;
 
 public class Cliente extends Pessoa {
 
