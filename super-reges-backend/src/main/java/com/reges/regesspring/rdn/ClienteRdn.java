@@ -44,7 +44,7 @@ public class ClienteRdn {
             ConnectionFactory factory = new ConnectionFactory();
             Connection conn = factory.getConnection();
 
-            //CRIA O STATMENT JÁ PREPARADO PARA OBTER O ID CLIENTE GERADO
+            // CRIA O STATMENT JÁ PREPARADO PARA OBTER O ID CLIENTE GERADO
             PreparedStatement stmt = conn.prepareStatement(str.toString(), Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, cli.getNomeCompleto());
@@ -57,22 +57,26 @@ public class ClienteRdn {
             stmt.setString(8, cli.getCartaoFidelidade());
 
             int id = 0;
-            
-            linhasAfetadas = stmt.executeUpdate();      
-            
-            ResultSet rs = stmt.getGeneratedKeys();            
+
+            linhasAfetadas = stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                //RECUPERA O IDCLIENTE
-                
-               id = rs.getInt(1); //recuperar o id               
-               
-               EnderecoRdn endRdn = new EnderecoRdn();           
-               Endereco end = cli.getEndereco();
-               end.setIdCliente(id);
-               
-               endRdn.inserirEndereco(end);
-               
-            }          
+                // RECUPERA O IDCLIENTE
+
+                id = rs.getInt(1); // recuperar o id
+
+                EnderecoRdn endRdn = new EnderecoRdn();
+                Endereco end = cli.getEndereco();
+
+                if (end != null) {
+
+                    end.setIdCliente(id);
+
+                    endRdn.inserirEndereco(end);
+                }
+
+            }
 
             stmt.close();
             conn.close();
@@ -106,7 +110,7 @@ public class ClienteRdn {
             ConnectionFactory factory = new ConnectionFactory();
             Connection conn = factory.getConnection();
 
-            //CRIA O STATMENT JÁ PREPARADO PARA OBTER O ID CLIENTE GERADO
+            // CRIA O STATMENT JÁ PREPARADO PARA OBTER O ID CLIENTE GERADO
             PreparedStatement stmt = conn.prepareStatement(str.toString());
 
             stmt.setString(1, cli.getNomeCompleto());
@@ -129,7 +133,7 @@ public class ClienteRdn {
 
         }
     }
-    
+
     public int deletarCliente(int idCliente) {
         try {
 
@@ -160,44 +164,41 @@ public class ClienteRdn {
         try {
 
             EnderecoRdn endRdn = new EnderecoRdn();
-            
+
             List<Cliente> lstCli = new ArrayList<Cliente>();
             StringBuilder str = new StringBuilder();
-            str.append("SELECT  *               ");           
+            str.append("SELECT  *               ");
             str.append("FROM cliente              ");
-            
 
-            //ABRE A CONEXÃO
+            // ABRE A CONEXÃO
             Connection conn = new ConnectionFactory().getConnection();
 
-            //CRIAR NOSSO STATEMENT            
+            // CRIAR NOSSO STATEMENT
             Statement stmt = conn.createStatement();
 
-            //RECEBER OS DADOS NO RESULTSET
+            // RECEBER OS DADOS NO RESULTSET
             ResultSet rs = stmt.executeQuery(str.toString());
 
-            //INSTANCIA DA CLASSE ENDERECO RDN
-             //EnderecoRdn endRdn = new EnderecoRdn();
-             
+            // INSTANCIA DA CLASSE ENDERECO RDN
+            // EnderecoRdn endRdn = new EnderecoRdn();
+
             while (rs.next()) {
 
-                //CONVERTER SQL DATE TO CALENDAR
+                // CONVERTER SQL DATE TO CALENDAR
                 Calendar calendar = Calendar.getInstance();
-              
-               
-               Endereco end =   endRdn.obterPorIdCliente(rs.getInt("ID"));
-                
-               
+
+                Endereco end = endRdn.obterPorIdCliente(rs.getInt("ID"));
+
                 Cliente cli = new Cliente(rs.getInt("ID"),
                         rs.getString("nomecompleto"),
                         rs.getString("nomeResumido"),
-                  
+
                         end,
-                          rs.getString("TELEFONE"),
+                        rs.getString("TELEFONE"),
                         calendar,
                         rs.getString("DOCUMENTO"),
                         rs.getString("RGIE"),
-                        rs.getString("EMAIL"),                   
+                        rs.getString("EMAIL"),
                         rs.getString("CARTAOFIDELIDADE"));
 
                 lstCli.add(cli);
@@ -211,7 +212,7 @@ public class ClienteRdn {
             return null;
         }
     }
-    
+
     public Cliente obterPorId(int id) {
         try {
 
@@ -219,59 +220,55 @@ public class ClienteRdn {
 
             StringBuilder str = new StringBuilder();
 
-                str.append("SELECT id,                        ");
-                str.append("    nomeCompleto,             " );
-                str.append("    nomeResumido,             " );
-                str.append("    email,                    " );
-                str.append("    telefone,                 " );
-                str.append("    dataNascFund,             " );
-                str.append("    documento,                " );
-                str.append("    rgIe,                     " );
-                str.append("    cartaoFidelidade          " );
-                str.append("FROM cliente WHERE ID = ?     " );
+            str.append("SELECT id,                        ");
+            str.append("    nomeCompleto,             ");
+            str.append("    nomeResumido,             ");
+            str.append("    email,                    ");
+            str.append("    telefone,                 ");
+            str.append("    dataNascFund,             ");
+            str.append("    documento,                ");
+            str.append("    rgIe,                     ");
+            str.append("    cartaoFidelidade          ");
+            str.append("FROM cliente WHERE ID = ?     ");
 
-
-           
-
-            //ABRE A CONEXÃO
+            // ABRE A CONEXÃO
             Connection conn = new ConnectionFactory().getConnection();
 
-            //CRIAR NOSSO STATEMENT            
+            // CRIAR NOSSO STATEMENT
             PreparedStatement stmt = conn.prepareStatement(str.toString());
 
-          
             stmt.setInt(1, id);
-            
-            //RECEBER OS DADOS NO RESULTSET
+
+            // RECEBER OS DADOS NO RESULTSET
             ResultSet rs = stmt.executeQuery();
 
-            //INSTANCIA DA CLASSE ENDERECO RDN
+            // INSTANCIA DA CLASSE ENDERECO RDN
             EnderecoRdn endRdn = new EnderecoRdn();
-            
+
             if (rs.next()) {
 
-                //CONVERTER SQL DATE TO CALENDAR
+                // CONVERTER SQL DATE TO CALENDAR
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(rs.getDate("dataNascFund"));
 
-                /*              
-                public Cliente(int id, String nome, Calendar dataNascimento, String documento, 
-                String telefone, String email, Endereco endereco, String cartaoFidelidade)
+                /*
+                 * public Cliente(int id, String nome, Calendar dataNascimento, String
+                 * documento,
+                 * String telefone, String email, Endereco endereco, String cartaoFidelidade)
                  */
                 Endereco end = endRdn.obterPorIdCliente(rs.getInt("ID"));
-                
+
                 ret = new Cliente(rs.getInt("ID"),
                         rs.getString("nomecompleto"),
                         rs.getString("nomeResumido"),
-                  
+
                         end,
-                          rs.getString("TELEFONE"),
+                        rs.getString("TELEFONE"),
                         calendar,
                         rs.getString("DOCUMENTO"),
                         rs.getString("rgIe"),
-                        rs.getString("EMAIL"),                   
+                        rs.getString("EMAIL"),
                         rs.getString("CARTAOFIDELIDADE"));
-                
 
             }
             return ret;
